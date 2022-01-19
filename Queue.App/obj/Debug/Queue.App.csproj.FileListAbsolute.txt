@@ -1,0 +1,8 @@
+D:\C#\Queue.App\Queue.App\bin\Debug\Queue.App.exe.config
+D:\C#\Queue.App\Queue.App\bin\Debug\Queue.App.exe
+D:\C#\Queue.App\Queue.App\bin\Debug\Queue.App.pdb
+D:\C#\Queue.App\Queue.App\obj\Debug\Queue.App.csproj.AssemblyReference.cache
+D:\C#\Queue.App\Queue.App\obj\Debug\Queue.App.csproj.SuggestedBindingRedirects.cache
+D:\C#\Queue.App\Queue.App\obj\Debug\Queue.App.csproj.CoreCompileInputs.cache
+D:\C#\Queue.App\Queue.App\obj\Debug\Queue.App.exe
+D:\C#\Queue.App\Queue.App\obj\Debug\Queue.App.pdb
