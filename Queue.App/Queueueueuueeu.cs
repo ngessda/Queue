@@ -49,13 +49,23 @@ namespace Queue.App
         {
             double x = a;
             double fx;
+            bool block;
             x += ((b - a) / n) * (int)count;
             for (int i = 0; i < m; i++)
             {
+                block = false;
                 fx = 0;
                 x += h;
                 fx = h * (Math.Sqrt(1 - (1 / Math.Exp(x))) / (Math.Pow(x, 2) + 1));
-                queue.Enqueue(fx);
+                try
+                {
+                    Monitor.Enter(queue,ref block);
+                    queue.Enqueue(fx);
+                }
+                finally
+                {
+                    if (block) Monitor.Exit(queue);
+                }
                 Console.WriteLine("{0}: {1}", Thread.CurrentThread.Name, fx);
                 Thread.Sleep(100);
             }
