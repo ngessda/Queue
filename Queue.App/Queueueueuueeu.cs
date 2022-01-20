@@ -34,12 +34,12 @@ namespace Queue.App
                 thread.Start(i);
                 t.Add(thread);
             }
-            for (int i = 0; i < n; i++)
-            {
-                t[i].Join();
-            }
             var threadd = new Thread(zxc =>
             {
+                for (int i = 0; i < n; i++)
+                {
+                    t[i].Join();
+                }
                 for (int i = 0; i < queue.Count; i++)
                 {
                     result += queue.Dequeue();
