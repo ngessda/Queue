@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "77bbad97-df5f-4d7c-985d-4eee1667b3c0": {
+      "ProjectGuid": "77bbad97-df5f-4d7c-985d-4eee1667b3c0",
+      "DisplayName": "Queue.App",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

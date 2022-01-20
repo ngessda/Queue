@@ -38,10 +38,15 @@ namespace Queue.App
             {
                 t[i].Join();
             }
-            for(int i = 0; i < queue.Count; i++)
+            var threadd = new Thread(zxc =>
             {
-                result += queue.Dequeue();
-            }
+                for (int i = 0; i < queue.Count; i++)
+                {
+                    result += queue.Dequeue();
+                }
+            });
+            threadd.Start();
+            threadd.Join();
             Console.WriteLine(Math.Round(result, 3));
         }
 
