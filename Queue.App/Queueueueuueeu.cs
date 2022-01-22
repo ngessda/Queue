@@ -9,10 +9,13 @@ namespace Queue.App
 {
     internal class Queueueueuueeu
     {
-        private double result = 0;
+        private static double result = 0;
         private int n = Environment.ProcessorCount;
         private const int m = 4;
+        private static int nm = 0;
 
+        private static double x = 0;
+        private static bool stop = false;
         private double a = 0;
         private double b = 0;
         private static double h = 0;
@@ -22,57 +25,69 @@ namespace Queue.App
         {
             a = ax;
             b = bx;
-            h = (b - a) / (n * m);
+            h = (b - a) / ((n - 1) * m);
             StartingThreads();
         }
         private void StartingThreads()
         {
-            var t = new List<Thread>();
-            for (int i = 0; i < n; i++)
-            {
-                var thread = new Thread(new ParameterizedThreadStart(SolveFx));
-                thread.Start(i);
-                t.Add(thread);
-            }
+
             var threadd = new Thread(zxc =>
             {
-                for (int i = 0; i < n; i++)
+                while (!stop)
                 {
-                    t[i].Join();
-                }
-                for (int i = 0; i < queue.Count; i++)
-                {
-                    result += queue.Dequeue();
+                    try
+                    {
+                        Monitor.Enter(queue);
+                        while(queue.Count < 3)
+                        {
+                            Monitor.Wait(queue);
+                        }
+                        while (queue.Count > 0)
+                        {
+                            result += queue.Dequeue();
+                            Console.WriteLine(result);
+                        }
+                        if(nm >= n - 1)
+                        {
+                            stop = true;
+                        }
+                    }
+                    finally
+                    {
+                        nm++;
+                        Monitor.Exit(queue);
+                    }
                 }
             });
             threadd.Start();
-            threadd.Join();
-            Console.WriteLine(Math.Round(result, 3));
+            for (int i = 0; i < n - 1; i++)
+            {
+                var thread = new Thread(new ParameterizedThreadStart(SolveFx));
+                thread.Start(i);
+            }
         }
 
         private void SolveFx(object count)
         {
-            double x = a;
-            double fx;
-            bool block;
-            x += ((b - a) / n) * (int)count;
-            for (int i = 0; i < m; i++)
+            while(!stop)
             {
-                block = false;
+                x = a;
+                double fx;
+                x += ((b - a) / (n - 1)) * (int)count;
                 fx = 0;
                 x += h;
                 fx = h * (Math.Sqrt(1 - (1 / Math.Exp(x))) / (Math.Pow(x, 2) + 1));
                 try
                 {
-                    Monitor.Enter(queue,ref block);
+                    Monitor.Enter(queue);
                     queue.Enqueue(fx);
                 }
                 finally
                 {
-                    if (block) Monitor.Exit(queue);
+                    Monitor.Pulse(queue);
+                    Monitor.Exit(queue);
+                    Thread.Sleep(1500);
                 }
-                Console.WriteLine("{0}: {1}", Thread.CurrentThread.Name, fx);
-                Thread.Sleep(100);
             }
         }
     }
